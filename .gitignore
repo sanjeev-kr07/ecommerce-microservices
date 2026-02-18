@@ -1,0 +1,15 @@
+# Java / Spring Boot
+/target
+/build
+
+# IDE
+/.idea
+/.vscode
+*.iml
+
+# Logs
+*.log
+
+# Env / secrets
+.env
+application-local.properties
