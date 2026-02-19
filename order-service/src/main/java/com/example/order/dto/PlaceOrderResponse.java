@@ -2,6 +2,8 @@ package com.example.order.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class PlaceOrderResponse {
     private Long orderId;
@@ -10,5 +12,6 @@ public class PlaceOrderResponse {
     private Integer quantity;
     private String status;
     private String message;
+    private List<Long> reservedFromBatchIds;
 
 }

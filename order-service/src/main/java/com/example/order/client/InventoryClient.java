@@ -2,9 +2,12 @@ package com.example.order.client;
 
 import com.example.order.client.dto.InventoryResponse;
 import com.example.order.client.dto.InventoryUpdateRequest;
+import com.example.order.client.dto.ReserveInventoryResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.Map;
 
 @Component
 @Slf4j
@@ -29,17 +32,12 @@ public class InventoryClient {
         }
     }
 
-    public void reserveInventory(Long productId, int quantity) {
-        InventoryUpdateRequest req = new InventoryUpdateRequest();
-        req.setProductId(productId);
-        req.setQuantity(quantity);
-        req.setProductType("DEFAULT");
-
-        webClient.post()
+    public ReserveInventoryResponse reserveInventory(Long productId, int quantity) {
+        return webClient.post()
                 .uri("/inventory/v1/update")
-                .bodyValue(req)
+                .bodyValue(Map.of("productId", productId, "quantity", quantity))
                 .retrieve()
-                .toBodilessEntity()
+                .bodyToMono(ReserveInventoryResponse.class)
                 .block();
     }
 }

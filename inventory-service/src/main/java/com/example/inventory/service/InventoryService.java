@@ -9,6 +9,7 @@ import com.example.inventory.repository.InventoryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,8 +52,7 @@ public class InventoryService {
         return response;
     }
 
-    @Transactional
-    public void reserve(Long productId, int qty, String productType) {
+    public List<Long> reserveAndReturnBatchIds(Long productId, int qty) {
 
         if (qty <= 0) {
             throw new IllegalArgumentException("Invalid quantity");
@@ -65,10 +65,27 @@ public class InventoryService {
             throw new IllegalArgumentException("Product not found");
         }
 
-        InventoryHandler handler = factory.getHandler(productType);
-        handler.updateStock(batches, qty);
+        int remaining = qty;
+        List<Long> usedBatchIds = new ArrayList<>();
+
+        for (Inventory batch : batches) {
+            if (remaining <= 0) break;
+
+            int available = batch.getQuantity();
+            if (available <= 0) continue;
+
+            int take = Math.min(available, remaining);
+            batch.setQuantity(available - take);
+            remaining -= take;
+            usedBatchIds.add(batch.getBatchId());
+        }
+
+        if (remaining > 0) {
+            throw new IllegalStateException("Insufficient stock");
+        }
 
         repository.saveAll(batches);
+        return usedBatchIds;
     }
 
     private InventoryDto toDto(Inventory batch) {

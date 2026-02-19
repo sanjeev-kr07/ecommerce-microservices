@@ -3,6 +3,7 @@ package com.example.inventory.controller;
 import com.example.inventory.dto.InventoryDto;
 import com.example.inventory.dto.InventoryResponse;
 import com.example.inventory.dto.InventoryUpdateRequest;
+import com.example.inventory.dto.ReserveInventoryResponse;
 import com.example.inventory.entity.Inventory;
 import com.example.inventory.service.InventoryService;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +32,16 @@ public class InventoryController {
     }
 
     @PostMapping("/v1/update")
-    public ResponseEntity<?> updateInventory(@RequestBody InventoryUpdateRequest request) {
-        service.reserve(request.getProductId(), request.getQuantity(), request.getProductType());
-        return ResponseEntity.ok().body(
-                java.util.Map.of("message", "Inventory updated successfully")
+    public ResponseEntity<ReserveInventoryResponse> reserve(@RequestBody InventoryUpdateRequest req) {
+
+        List<Long> batchIds = service.reserveAndReturnBatchIds(
+                req.getProductId(),
+                req.getQuantity()
         );
+
+        ReserveInventoryResponse resp = new ReserveInventoryResponse();
+        resp.setReservedFromBatchIds(batchIds);
+
+        return ResponseEntity.ok(resp);
     }
 }
