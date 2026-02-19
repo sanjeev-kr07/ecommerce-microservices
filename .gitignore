@@ -13,3 +13,22 @@
 # Env / secrets
 .env
 application-local.properties
+
+# Gradle cache and wrapper
+/.gradle/
+**/.gradle/
+
+# Module build outputs (ignore all build directories)
+**/build/
+
+# Compiled classes and archives
+*.class
+*.jar
+*.war
+*.ear
+
+# macOS
+.DS_Store
+
+# Other temp files
+/*.log
