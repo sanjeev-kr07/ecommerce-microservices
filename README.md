@@ -73,7 +73,7 @@ Sample response
 Single-line form:
 
 ```bash
-curl -X POST http://localhost:8082/order -H "Content-Type: application/json" -d '{"productId":1001,"quantity":2}'
+curl -X POST http://localhost:8082/order -H "Content-Type: application/json" -d '{"productId":1002,"quantity":24}'
 ```
 ```
 {
