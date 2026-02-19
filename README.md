@@ -44,10 +44,20 @@ Sample API calls
 1) Get inventory for a product (example productId: 1001, productType: DEFAULT)
 
 ```bash
-curl "http://localhost:8081/inventory/1001?productType=DEFAULT"
+curl "http://localhost:8081/inventory/v1/1001"
 ```
 
-2) Create an order (POST to order service)
+2) Updates inventory after an order is placed
+
+```bash
+curl -X POST http://localhost:8081/inventory/v1/update -H "Content-Type: application/json" -d '{
+  "productId": 1002,
+  "quantity": 7,
+  "productType": "DEFAULT"
+}'
+```
+
+3) Create an order (POST to order service)
 
 Single-line form:
 
