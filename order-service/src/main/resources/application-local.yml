@@ -3,6 +3,5 @@ spring:
 
 inventory:
   service:
-    base-url: http://localhost:8081
+    base-url: http://inventory-service:8081
     product-type: DEFAULT
-

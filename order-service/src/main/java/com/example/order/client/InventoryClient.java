@@ -2,10 +2,12 @@ package com.example.order.client;
 
 import com.example.order.client.dto.InventoryResponse;
 import com.example.order.client.dto.InventoryUpdateRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Component
+@Slf4j
 public class InventoryClient {
 
     private final WebClient webClient;
@@ -22,6 +24,7 @@ public class InventoryClient {
                     .bodyToMono(InventoryResponse.class)
                     .block();
         } catch (Exception e) {
+            log.error("Inventory service unavailable :"+e.getMessage());
             throw new IllegalStateException("Inventory service unavailable");
         }
     }

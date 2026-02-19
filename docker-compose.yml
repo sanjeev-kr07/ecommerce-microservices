@@ -5,6 +5,8 @@ services:
       dockerfile: inventory-service/Dockerfile
     ports:
       - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
 
   order-service:
     build:
@@ -15,4 +17,4 @@ services:
     depends_on:
       - inventory-service
     environment:
-      - INVENTORY_BASE_URL=http://inventory-service:8081
+      - INVENTORY_SERVICE_BASE_URL=http://inventory-service:8081
