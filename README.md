@@ -32,6 +32,19 @@ Sample API calls
 ```bash
 curl "http://localhost:8081/inventory/v1/1001"
 ```
+Sample response
+```{
+    "productId": 1001,
+    "productName": "Laptop",
+    "batches": [
+        {
+            "batchId": 1,
+            "quantity": 54,
+            "expiryDate": "2026-06-25"
+        }
+    ]
+}
+```
 
 2) Updates inventory after an order is placed
 
@@ -42,6 +55,12 @@ curl -X POST http://localhost:8081/inventory/v1/update -H "Content-Type: applica
   "productType": "DEFAULT"
 }'
 ```
+Sample response
+```
+{
+    "message": "Inventory updated successfully"
+}
+```
 
 3) Create an order (POST to order service)
 
@@ -49,4 +68,14 @@ Single-line form:
 
 ```bash
 curl -X POST http://localhost:8082/order -H "Content-Type: application/json" -d '{"productId":1001,"quantity":2}'
+```
+```
+{
+    "orderId": 11,
+    "productId": 1001,
+    "productName": "Laptop",
+    "quantity": 14,
+    "status": "PLACED",
+    "message": "Order placed. Inventory reserved."
+}
 ```
