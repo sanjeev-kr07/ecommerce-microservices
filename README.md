@@ -62,10 +62,9 @@ curl -X POST http://localhost:8081/inventory/v1/update -H "Content-Type: applica
 ```
 Sample response
 ```
+
 {
-    {
-    "reservedFromBatchIds": [9]
-    }
+"reservedFromBatchIds": [9]
 }
 ```
 
