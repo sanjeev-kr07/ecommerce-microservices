@@ -30,17 +30,22 @@ Sample API calls
 1) Get inventory for a product (example productId: 1001, productType: DEFAULT)
 
 ```bash
-curl "http://localhost:8081/inventory/v1/1001"
+curl "http://localhost:8081/inventory/v1/1002"
 ```
 Sample response
-```{
-    "productId": 1001,
-    "productName": "Laptop",
+```{{
+    "productId": 1002,
+    "productName": "Smartphone",
     "batches": [
         {
-            "batchId": 1,
-            "quantity": 54,
-            "expiryDate": "2026-06-25"
+            "batchId": 9,
+            "quantity": 22,
+            "expiryDate": "2026-05-31"
+        },
+        {
+            "batchId": 10,
+            "quantity": 83,
+            "expiryDate": "2026-11-15"
         }
     ]
 }
@@ -58,7 +63,9 @@ curl -X POST http://localhost:8081/inventory/v1/update -H "Content-Type: applica
 Sample response
 ```
 {
-    "message": "Inventory updated successfully"
+    {
+    "reservedFromBatchIds": [9]
+    }
 }
 ```
 
@@ -71,11 +78,12 @@ curl -X POST http://localhost:8082/order -H "Content-Type: application/json" -d 
 ```
 ```
 {
-    "orderId": 11,
-    "productId": 1001,
-    "productName": "Laptop",
-    "quantity": 14,
+    "orderId": 13,
+    "productId": 1002,
+    "productName": "Smartphone",
+    "quantity": 24,
     "status": "PLACED",
-    "message": "Order placed. Inventory reserved."
+    "message": "Order placed. Inventory reserved.",
+    "reservedFromBatchIds": [9,10]
 }
 ```
